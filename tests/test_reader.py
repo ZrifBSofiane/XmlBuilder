@@ -1,36 +1,33 @@
 import os
-from os import path
-from xml.etree import ElementTree
-import re
-
 from xmlreader.XmlReader import XmlReader
 
 
-class note:
+class prices:
     def __init__(self):
-        self.to = None
-        self.from1 = None
-        self.heading = None
-        self.body = None
+        self.open = None
+        self.close = None
+
+    def average(self):
+        return (self.open + self.close) * 0.5
 
 
-class toDetail:
+class stock:
     def __init__(self):
-        self.detail1 = None
-        self.detail3 = None
+        self.name = None
+        self.isin = None
+        self.prices = None
 
 
-class to:
+class stocks:
     def __init__(self):
-        self.to1 = None
-        self.to2 = None
-        self.toDetail = None
+        self.priceDate = None
+        self.stock = []
 
 
 builder = XmlReader()
-builder.register(lambda: note())
-builder.register(lambda: to())
-builder.register(lambda: toDetail())
+builder.register(lambda: stocks())
+builder.register(lambda: stock())
+builder.register(lambda: prices())
 
 current_path = os.curdir
 file = os.path.join(current_path, 'Files', 'readXml.xml')

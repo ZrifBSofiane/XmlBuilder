@@ -40,7 +40,10 @@ class XmlReader:
     def __affect_value(self, key, tag, current_object, value):
         if key in self.types:
             if tag in self.types[key][1]:
-                current_object.__dict__[tag] = value
+                if isinstance(current_object.__dict__[tag], list):
+                    current_object.__dict__[tag].append(value)
+                else:
+                    current_object.__dict__[tag] = value
 
 
 
