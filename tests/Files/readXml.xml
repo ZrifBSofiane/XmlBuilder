@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <note>
-  <to>Tove</to>
+  <to>
+    <toDetail>
+      <detail1>DetailApart</detail1>
+      <detail3>France</detail3>
+    </toDetail>
+    <to1>TOO1</to1>
+    <to2>Test</to2>
+  </to>
   <from1>Jani</from1>
   <heading>Reminder</heading>
   <body>Don't forget me this weekend!</body>
