@@ -1,7 +1,7 @@
-from typing import Any
-import re
-from os import path
 from xml.etree import ElementTree
+from typing import Any
+from os import path
+import re
 
 
 class XmlReader:
