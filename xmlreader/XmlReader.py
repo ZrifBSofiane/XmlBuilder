@@ -1,4 +1,5 @@
 from xml.etree import ElementTree
+from datetime import datetime
 from typing import Any
 from os import path
 import re
@@ -7,10 +8,15 @@ import re
 class XmlReader:
     def __init__(self):
         self.types = {}
+        self.datetime_format = None
 
     def register(self, ctor: Any):
         temp = ctor()
         self.types[type(temp).__name__] = (ctor, temp.__dict__.keys())
+
+    def set_datetime_format(self, format: str):
+        if format is not None and len(format) > 0:
+            self.datetime_format = format
 
     def read(self, file):
         if not path.exists(file):
@@ -43,7 +49,19 @@ class XmlReader:
                 if isinstance(current_object.__dict__[tag], list):
                     current_object.__dict__[tag].append(value)
                 else:
-                    current_object.__dict__[tag] = value
+                    converted_value = self.__convert(current_object.__dict__[tag], value)
+                    current_object.__dict__[tag] = converted_value
+
+    def __convert(self, current, new):
+        if current is None or isinstance(current, str):
+            return new
+        if isinstance(current, int):
+            return int(new)
+        if isinstance(current, float):
+            return float(new)
+        if isinstance(current, datetime) and self.datetime_format is not None:
+            return datetime.strptime(new, self.datetime_format)
+
 
 
 
